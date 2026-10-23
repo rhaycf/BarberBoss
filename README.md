@@ -8,6 +8,8 @@ A API segue o padrão REST, disponibilizando endpoints para as operações da ap
 
 Dentre os pacotes NuGet utilizados, o AutoMapper facilita o mapeamento entre objetos da aplicação, reduzindo a necessidade de código repetitivo. O FluentValidation é utilizado para definir as regras de validação das requisições, contribuindo para um código mais organizado e de fácil manutenção. Para o acesso ao banco de dados, o Entity Framework Core, integrado ao MySQL por meio do provedor Pomelo, permite manipular os dados utilizando objetos .NET, simplificando as operações de persistência. Os relatórios são gerados com PDFsharp-MigraDoc (PDF) e ClosedXML (Excel).
 
+<img width="1510" height="1221" alt="relatorio-faturamento-barberboss" src="https://github.com/user-attachments/assets/91f42b8f-4a16-4803-90ec-58e956af34d5" />
+
 ## Features
 
 - **Domain-Driven Design (DDD):** organização da aplicação em camadas (API, Application, Communication, Domain, Exception e Infrastructure), buscando separar as responsabilidades e facilitar a manutenção e a evolução do código.
