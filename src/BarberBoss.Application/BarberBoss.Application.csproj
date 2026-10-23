@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UseCases\Billings\Reports\Pdf\Fonts\BebasNeue-Regular.ttf" />
+    <None Remove="UseCases\Billings\Reports\Pdf\Fonts\Roboto_Condensed-Medium.ttf" />
+    <None Remove="UseCases\Billings\Reports\Pdf\Fonts\Roboto_Condensed-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="UseCases\Billings\Reports\Pdf\Fonts\BebasNeue-Regular.ttf" />
+    <EmbeddedResource Include="UseCases\Billings\Reports\Pdf\Fonts\Roboto_Condensed-Medium.ttf" />
+    <EmbeddedResource Include="UseCases\Billings\Reports\Pdf\Fonts\Roboto_Condensed-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BarberBoss.Communication\BarberBoss.Communication.csproj" />
+    <ProjectReference Include="..\BarberBoss.Domain\BarberBoss.Domain.csproj" />
+    <ProjectReference Include="..\BarberBoss.Exception\BarberBoss.Exception.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.1.3" />
+    <PackageReference Include="ClosedXML" Version="0.105.1" />
+    <PackageReference Include="FluentValidation" Version="12.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Logo\ProfileBarberBoss.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
