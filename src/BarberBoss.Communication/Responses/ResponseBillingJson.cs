@@ -4,8 +4,8 @@ namespace BarberBoss.Communication.Responses;
 
 public class ResponseBillingJson
 {
-    public int Id { get; set; }
-    public string Date { get; set; } = string.Empty;
+    public long Id { get; set; }
+    public DateTime Date { get; set; }
     public string BarberName { get; set; } = string.Empty;
     public string ClientName { get; set; } = string.Empty;
     public string ServiceName { get; set; } = string.Empty;
@@ -13,6 +13,6 @@ public class ResponseBillingJson
     public PaymentMethod PaymentMethod { get; set; }
     public Status Status { get; set; }
     public string? Notes { get; set; } = string.Empty;
-    public string CreatedAt { get; set; } = string.Empty;
-    public string UpdatedAt { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }
