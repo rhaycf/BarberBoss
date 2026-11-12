@@ -1,5 +1,7 @@
 ﻿using BarberBoss.Application.UseCases.Billings.Reports.Excel;
 using BarberBoss.Application.UseCases.Billings.Reports.Pdf;
+using BarberBoss.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
@@ -7,12 +9,13 @@ namespace BarberBoss.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = Roles.ADMIN)]
 public class ReportController : ControllerBase
 {
     [HttpGet("excel")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> GetExcel([FromServices] IBillingsReportExcelUseCase useCase, [FromHeader] DateOnly startDate, [FromHeader] DateOnly endDate)
+    public async Task<IActionResult> GetExcel([FromServices] IBillingsReportExcelUseCase useCase, [FromQuery] DateOnly startDate, [FromQuery] DateOnly endDate)
     {
         byte[] file = await useCase.Execute(startDate, endDate);
 

@@ -1,16 +1,18 @@
-﻿using BarberBoss.Application.UseCases.Billings.DeleteBilling;
-using BarberBoss.Application.UseCases.Billings.GetAllBillings;
+﻿using BarberBoss.Application.UseCases.Billings.Delete;
+using BarberBoss.Application.UseCases.Billings.GetAll;
 using BarberBoss.Application.UseCases.Billings.GetById;
-using BarberBoss.Application.UseCases.Billings.RegisterBilling;
-using BarberBoss.Application.UseCases.Billings.UpdateBilling;
+using BarberBoss.Application.UseCases.Billings.Register;
+using BarberBoss.Application.UseCases.Billings.Update;
 using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberBoss.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class BillingsController : ControllerBase
 {
     [HttpPost]
