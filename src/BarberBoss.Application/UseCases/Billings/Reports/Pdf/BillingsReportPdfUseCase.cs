@@ -6,6 +6,7 @@ using BarberBoss.Domain.Enums;
 using BarberBoss.Domain.Extensions;
 using BarberBoss.Domain.Reports;
 using BarberBoss.Domain.Repositories.Billings;
+using BarberBoss.Domain.Services.LoggedUser;
 using BarberBoss.Exception;
 using BarberBoss.Exception.ExceptionsBase;
 using MigraDoc.DocumentObjectModel;
@@ -21,16 +22,20 @@ public class BillingsReportPdfUseCase : IBillingsReportPdfUseCase
     private const string CURRENCY_SYMBOL = "R$";
     private const int HEIGHT_ROW_BILLING_TABLE = 25;
     private readonly IBillingsReadOnlyRepository _repository;
+    private readonly ILoggedUser _loggedUser;
 
-    public BillingsReportPdfUseCase(IBillingsReadOnlyRepository repository)
+    public BillingsReportPdfUseCase(IBillingsReadOnlyRepository repository, ILoggedUser loggedUser)
     {
         _repository = repository;
+        _loggedUser = loggedUser;
 
         GlobalFontSettings.FontResolver = new BillingsReportFontResolver();
     }
 
     public async Task<byte[]> Execute(DateOnly startDate, DateOnly endDate)
     {
+        var loggedUser = await _loggedUser.Get();
+
         var request = new RequestBillingReportJson
         {
             StartDate = startDate,
@@ -39,14 +44,14 @@ public class BillingsReportPdfUseCase : IBillingsReportPdfUseCase
 
         Validate(request);
 
-        var billings = (await _repository.FilterByPeriod(startDate, endDate))
+        var billings = (await _repository.FilterByPeriod(loggedUser, startDate, endDate))
             .Where(billing => billing.Status != Status.Cancelled)
             .ToList();
 
         if (billings.Count == 0)
             return [];
 
-        var document = CreateDocument(startDate, endDate);
+        var document = CreateDocument(loggedUser.Name, startDate, endDate);
         var page = CreatePage(document);
 
         CreateHeaderWithProfilePhotoAndName(page);
@@ -108,12 +113,12 @@ public class BillingsReportPdfUseCase : IBillingsReportPdfUseCase
         return RenderDocument(document);
     }
 
-    private Document CreateDocument(DateOnly startDate, DateOnly endDate)
+    private Document CreateDocument(string author, DateOnly startDate, DateOnly endDate)
     {
         var document = new Document();
 
         document.Info.Title = string.Format(ResourceReportGenerationMessages.WEEKLY_BILLING_TITLE, startDate.ToString("dd/MM/yyyy"), endDate.ToString("dd/MM/yyyy"));
-        document.Info.Author = "Rhayane";
+        document.Info.Author = author;
 
         var style = document.Styles["Normal"];
         style!.Font.Name = FontHelper.BEBASNEUE_REGULAR;
@@ -167,7 +172,7 @@ public class BillingsReportPdfUseCase : IBillingsReportPdfUseCase
 
         paragraph.AddLineBreak();
 
-        paragraph.AddFormattedText($"{CURRENCY_SYMBOL} {totalBillings}", new Font { Name = FontHelper.BEBASNEUE_REGULAR, Size = 50 });
+        paragraph.AddFormattedText($"{CURRENCY_SYMBOL} {totalBillings:f2}", new Font { Name = FontHelper.BEBASNEUE_REGULAR, Size = 50 });
     }
 
     private Table CreateBillingTable(Section page)
@@ -209,7 +214,7 @@ public class BillingsReportPdfUseCase : IBillingsReportPdfUseCase
 
     private void AddAmountForBilling(Cell cell, decimal amount)
     {
-        cell.AddParagraph($"{CURRENCY_SYMBOL} {amount}");
+        cell.AddParagraph($"{CURRENCY_SYMBOL} {amount:f2}");
         cell.Format.Font = new Font { Name = FontHelper.ROBOTO_REGULAR, Size = 14, Color = ColorsHelper.BLACK };
         cell.Shading.Color = ColorsHelper.WHITE;
         cell.VerticalAlignment = VerticalAlignment.Center;

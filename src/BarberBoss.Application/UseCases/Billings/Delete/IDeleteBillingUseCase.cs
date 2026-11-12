@@ -1,4 +1,4 @@
-﻿namespace BarberBoss.Application.UseCases.Billings.DeleteBilling;
+﻿namespace BarberBoss.Application.UseCases.Billings.Delete;
 
 public interface IDeleteBillingUseCase
 {

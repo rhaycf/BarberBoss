@@ -4,7 +4,7 @@ using BarberBoss.Domain.Enums;
 using BarberBoss.Domain.Extensions;
 using BarberBoss.Domain.Reports;
 using BarberBoss.Domain.Repositories.Billings;
-using BarberBoss.Exception;
+using BarberBoss.Domain.Services.LoggedUser;
 using BarberBoss.Exception.ExceptionsBase;
 using ClosedXML.Excel;
 
@@ -14,14 +14,18 @@ public class BillingsReportExcelUseCase : IBillingsReportExcelUseCase
 {
     private const string CURRENCY_SYMBOL = "R$";
     private readonly IBillingsReadOnlyRepository _repository;
+    private readonly ILoggedUser _loggedUser;
 
-    public BillingsReportExcelUseCase(IBillingsReadOnlyRepository repository)
+    public BillingsReportExcelUseCase(IBillingsReadOnlyRepository repository, ILoggedUser loggedUser)
     {
         _repository = repository;
+        _loggedUser = loggedUser;
     }
 
     public async Task<byte[]> Execute(DateOnly startDate, DateOnly endDate)
     {
+        var loggedUser = await _loggedUser.Get();
+
         var request = new RequestBillingReportJson
         {
             StartDate = startDate,
@@ -30,7 +34,7 @@ public class BillingsReportExcelUseCase : IBillingsReportExcelUseCase
 
         Validate(request);
 
-        var billings = (await _repository.FilterByPeriod(startDate, endDate))
+        var billings = (await _repository.FilterByPeriod(loggedUser, startDate, endDate))
             .Where(billing => billing.Status != Status.Cancelled)
             .ToList();
 
@@ -39,7 +43,7 @@ public class BillingsReportExcelUseCase : IBillingsReportExcelUseCase
 
         using var workbook = new XLWorkbook();
 
-        workbook.Author = "Rhayane";
+        workbook.Author = loggedUser.Name;
         workbook.Style.Font.FontSize = 12;
         workbook.Style.Font.FontName = "Times New Roman";
 

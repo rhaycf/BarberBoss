@@ -1,6 +1,6 @@
 ﻿using BarberBoss.Communication.Responses;
 
-namespace BarberBoss.Application.UseCases.Billings.GetAllBillings;
+namespace BarberBoss.Application.UseCases.Billings.GetAll;
 
 public interface IGetAllBillingUseCase
 {

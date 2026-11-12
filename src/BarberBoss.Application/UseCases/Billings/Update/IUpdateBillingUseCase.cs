@@ -1,6 +1,6 @@
 ﻿using BarberBoss.Communication.Requests;
 
-namespace BarberBoss.Application.UseCases.Billings.UpdateBilling;
+namespace BarberBoss.Application.UseCases.Billings.Update;
 
 public interface IUpdateBillingUseCase
 {
