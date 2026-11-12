@@ -13,8 +13,11 @@ Dentre os pacotes NuGet utilizados, o AutoMapper facilita o mapeamento entre obj
 ## Features
 
 - **Domain-Driven Design (DDD):** organização da aplicação em camadas (API, Application, Communication, Domain, Exception e Infrastructure), buscando separar as responsabilidades e facilitar a manutenção e a evolução do código.
+- **Autenticação e autorização:** login com token JWT e perfis de acesso (Admin e Barbeiro). Cada faturamento pertence a um usuário, e os relatórios são restritos ao perfil Admin.
+- **Gerenciamento de usuários:** cadastro, consulta e atualização do perfil, troca de senha e exclusão da conta, com a senha armazenada criptografada.
 - **Regras de negócio validadas:** por exemplo, um faturamento cancelado deve ter valor zero e as datas não podem estar no futuro.
-- **Testes unitários:** testes automatizados com xUnit, Shouldly e Bogus para verificar o comportamento da aplicação e auxiliar na identificação de possíveis erros.
+- **Mensagens em vários idiomas:** as mensagens de erro são devolvidas em inglês ou português (pt-BR), de acordo com o header `Accept-Language` da requisição.
+- **Testes automatizados:** testes unitários (use cases e validators) e testes de integração da API com `WebApplicationFactory` e banco em memória, usando xUnit, FluentAssertions, Moq e Bogus.
 - **Geração de relatórios:** geração de arquivos Excel e documentos PDF do faturamento por período, desconsiderando os atendimentos cancelados.
 - **API RESTful com Swagger:** disponibilização de endpoints seguindo os princípios REST, com documentação interativa para visualizar e testar as funcionalidades da API.
 
@@ -51,6 +54,12 @@ git clone https://github.com/rhaycf/BarberBoss.git
 {
   "ConnectionStrings": {
     "Connection": "Server=localhost;Database=barberbossdb;Uid=SEU_USUARIO;Pwd=SUA_SENHA;"
+  },
+  "Settings": {
+    "Jwt": {
+      "SigningKey": "SUA_CHAVE_SECRETA_COM_NO_MINIMO_32_CARACTERES",
+      "ExpiresMinutes": 60
+    }
   }
 }
 ```
@@ -63,14 +72,34 @@ dotnet run --project src/BarberBoss.API
 
 O Swagger fica disponível em `http://localhost:5010/swagger`.
 
+### Executando os testes
+
+```bash
+dotnet test
+```
+
+## Autenticação
+
+1. Cadastre um usuário em `POST /api/user`.
+2. Faça login em `POST /api/login` e copie o token retornado.
+3. Envie o token no header das demais requisições: `Authorization: Bearer SEU_TOKEN`.
+
 ## Endpoints
 
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| `POST` | `/api/billings` | Registra um faturamento |
-| `GET` | `/api/billings` | Lista todos os faturamentos |
-| `GET` | `/api/billings/{id}` | Busca um faturamento pelo id |
-| `PUT` | `/api/billings/{id}` | Atualiza um faturamento |
-| `DELETE` | `/api/billings/{id}` | Remove um faturamento |
-| `GET` | `/api/report/pdf?startDate=&endDate=` | Gera o relatório do período em PDF |
-| `GET` | `/api/report/excel` | Gera o relatório do período em Excel (`startDate` e `endDate` nos headers) |
+| Método | Rota | Descrição | Acesso |
+|--------|------|-----------|--------|
+| POST | `/api/user` | Registra um usuário | Público |
+| POST | `/api/login` | Autentica e retorna o token | Público |
+| GET | `/api/user` | Retorna o perfil do usuário logado | Autenticado |
+| PUT | `/api/user` | Atualiza o perfil do usuário logado | Autenticado |
+| PUT | `/api/user/change-password` | Altera a senha | Autenticado |
+| DELETE | `/api/user` | Exclui a conta do usuário logado | Autenticado |
+| POST | `/api/billings` | Registra um faturamento | Autenticado |
+| GET | `/api/billings` | Lista os faturamentos do usuário logado | Autenticado |
+| GET | `/api/billings/{id}` | Busca um faturamento pelo id | Autenticado |
+| PUT | `/api/billings/{id}` | Atualiza um faturamento | Autenticado |
+| DELETE | `/api/billings/{id}` | Remove um faturamento | Autenticado |
+| GET | `/api/report/pdf?startDate=&endDate=` | Gera o relatório do período em PDF | Admin |
+| GET | `/api/report/excel?startDate=&endDate=` | Gera o relatório do período em Excel | Admin |
+
+As datas dos relatórios seguem o formato `yyyy-MM-dd`. Quando não há faturamentos no período, os endpoints de relatório e a listagem de faturamentos retornam `204 No Content`.
