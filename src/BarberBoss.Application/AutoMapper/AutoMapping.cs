@@ -16,28 +16,15 @@ public class AutoMapping : Profile
     private void RequestToEntity()
     {
         CreateMap<RequestBillingJson, Billing>();
+        CreateMap<RequestRegisterUserJson, User>()
+            .ForMember(dest => dest.Password, config => config.Ignore());
     }
     
     private void EntityToResponse()
     {
         CreateMap<Billing, ResponseRegisteredBillingJson>();
-        CreateMap<Billing, ResponseShortBillingJson>()
-            .ForMember(
-                dest => dest.Date, 
-                opt => opt.MapFrom(src => src.Date.ToString("dd/MM/yyyy HH:mm:ss"))
-            );
-        CreateMap<Billing, ResponseBillingJson>()
-            .ForMember(
-                dest => dest.Date,
-                opt => opt.MapFrom(src => src.Date.ToString("dd/MM/yyyy HH:mm:ss"))
-            )
-            .ForMember(
-                dest => dest.CreatedAt,
-                opt => opt.MapFrom(src => src.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss"))
-            )
-            .ForMember(
-                dest => dest.UpdatedAt,
-                opt => opt.MapFrom(src => src.UpdatedAt.ToString("dd/MM/yyyy HH:mm:ss"))
-            );
+        CreateMap<Billing, ResponseShortBillingJson>();
+        CreateMap<Billing, ResponseBillingJson>();
+        CreateMap<User, ResponseUserProfileJson>();
     }
 }
