@@ -4,7 +4,7 @@ using Bogus;
 
 namespace CommonTestUtilities.Requests;
 
-public static class RequestRegisterBillingJsonBuilder
+public static class RequestBillingJsonBuilder
 {
     public static RequestBillingJson Build()
     {

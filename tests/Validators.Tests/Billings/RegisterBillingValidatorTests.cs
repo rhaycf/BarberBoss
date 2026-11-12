@@ -4,7 +4,7 @@ using BarberBoss.Exception;
 using CommonTestUtilities.Requests;
 using Shouldly;
 
-namespace Validators.Tests.Billings.Register;
+namespace Validators.Tests.Billings;
 
 public class RegisterBillingValidatorTests
 {
@@ -13,7 +13,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
 
         // Act
         var result = validator.Validate(request);
@@ -31,7 +31,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Paid;
         request.BarberName = barberName;
 
@@ -54,7 +54,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Paid;
         request.ClientName = clientName;
 
@@ -77,7 +77,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.ServiceName = serviceName;
 
         // Act
@@ -95,7 +95,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.PaymentMethod = (PaymentMethod)700;
         request.Status = Status.Paid;
 
@@ -114,7 +114,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = (Status)150;
 
         // Act
@@ -135,7 +135,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Paid;
         request.Amount = amount;
 
@@ -154,7 +154,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Cancelled;
         request.Amount = 0;
 
@@ -166,7 +166,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Cancelled;
         request.Amount = 50;
 
@@ -184,7 +184,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Paid;
         request.Date = DateTime.UtcNow.AddDays(1);
 
@@ -202,7 +202,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Paid;
         request.CreatedAt = DateTime.UtcNow.AddDays(1);
 
@@ -220,7 +220,7 @@ public class RegisterBillingValidatorTests
     {
         // Arrange
         var validator = new BillingValidator();
-        var request = RequestRegisterBillingJsonBuilder.Build();
+        var request = RequestBillingJsonBuilder.Build();
         request.Status = Status.Paid;
         request.UpdatedAt = DateTime.UtcNow.AddDays(1);
 
