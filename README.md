@@ -74,9 +74,37 @@ O Swagger fica disponível em `http://localhost:5010/swagger`.
 
 ### Executando os testes
 
+Para rodar todos os testes (unitários, validators e integração):
+
 ```bash
 dotnet test
 ```
+
+### Relatório de cobertura de testes
+
+O projeto usa o `coverlet` para medir a cobertura e o `ReportGenerator` para gerar o relatório em HTML.
+
+1. Instale o gerador de relatório (uma vez só no computador):
+
+```bash
+dotnet tool install -g dotnet-reportgenerator-globaltool
+```
+
+2. Rode os testes coletando a cobertura:
+
+```bash
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+3. Gere o relatório:
+
+```bash
+reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:Html
+```
+
+4. Abra o arquivo `coverage-report/index.html` no navegador.
+
+> As pastas `coverage-report/` e `TestResults/` são geradas localmente e não são versionadas.
 
 ## Autenticação
 
