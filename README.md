@@ -82,7 +82,7 @@ dotnet test
 
 ### Relatório de cobertura de testes
 
-O projeto usa o `coverlet` para medir a cobertura e o `ReportGenerator` para gerar o relatório em HTML.
+O projeto usa o `coverlet` para medir a cobertura e o `ReportGenerator` para gerar um relatório visual em HTML.
 
 1. Instale o gerador de relatório (uma vez só no computador):
 
@@ -90,13 +90,19 @@ O projeto usa o `coverlet` para medir a cobertura e o `ReportGenerator` para ger
 dotnet tool install -g dotnet-reportgenerator-globaltool
 ```
 
-2. Rode os testes coletando a cobertura:
+2. Execute os testes coletando a cobertura:
 
 ```bash
 dotnet test --collect:"XPlat Code Coverage"
 ```
 
-3. Gere o relatório:
+> Caso queira aplicar as configurações de exclusão definidas no arquivo `.runsettings`:
+
+```bash
+dotnet test --collect:"XPlat Code Coverage" --settings "BarberBoss.runsettings"
+```
+
+3. Gere o relatório em HTML:
 
 ```bash
 reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:Html
@@ -105,6 +111,10 @@ reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report
 4. Abra o arquivo `coverage-report/index.html` no navegador.
 
 > As pastas `coverage-report/` e `TestResults/` são geradas localmente e não são versionadas.
+
+<br>
+<img width="1243" height="263" alt="image" src="https://github.com/user-attachments/assets/4542ec56-ec5b-4a47-8920-91659a016a9b" />
+<br>
 
 ## Autenticação
 
