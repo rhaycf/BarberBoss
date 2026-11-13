@@ -10,9 +10,12 @@ public class GetAllBillingTest : BarberBossClassFixture
 
     private readonly string _token;
 
+    private readonly string _tokenWithoutBillings;
+
     public GetAllBillingTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
         _token = webApplicationFactory.User_Barber.GetToken();
+        _tokenWithoutBillings = webApplicationFactory.User_WithoutBillings.GetToken();
     }
 
     [Fact]
@@ -27,5 +30,13 @@ public class GetAllBillingTest : BarberBossClassFixture
         var response = await JsonDocument.ParseAsync(body);
 
         response.RootElement.GetProperty("billings").EnumerateArray().Should().NotBeNullOrEmpty();
+    }
+
+    [Fact]
+    public async Task Success_Empty()
+    {
+        var result = await DoGet(requestUri: METHOD, token: _tokenWithoutBillings);
+
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 }

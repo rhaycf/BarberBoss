@@ -3,7 +3,7 @@ using BarberBoss.Exception;
 using CommonTestUtilities.Requests;
 using Shouldly;
 
-namespace Validators.Tests.Users.Update;
+namespace Validators.Test.Users.Update;
 
 public class UpdateUserValidatorTest
 {

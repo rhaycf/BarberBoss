@@ -48,6 +48,30 @@ public class BillingsReportTest : BarberBossClassFixture
     }
 
     [Fact]
+    public async Task Success_Empty_Pdf()
+    {
+        var date = new DateOnly(1900, 1, 1);
+
+        var result = await DoGet(
+            requestUri: $"{METHOD}/pdf?startDate={date:yyyy-MM-dd}&endDate={date:yyyy-MM-dd}",
+            token: _adminToken);
+
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Fact]
+    public async Task Success_Empty_Excel()
+    {
+        var date = new DateOnly(1900, 1, 1);
+
+        var result = await DoGet(
+            requestUri: $"{METHOD}/excel?startDate={date:yyyy-MM-dd}&endDate={date:yyyy-MM-dd}",
+            token: _adminToken);
+
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Fact]
     public async Task Error_Forbidden_User_Not_Allowed_Pdf()
     {
         var result = await DoGet(

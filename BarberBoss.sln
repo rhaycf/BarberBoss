@@ -21,11 +21,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberBoss.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTestUtilities", "tests\CommonTestUtilities\CommonTestUtilities.csproj", "{D2CCD344-765D-4294-B0CE-AB06CBEE578B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Tests", "tests\Validators.Tests\Validators.Tests.csproj", "{C1BF5697-AC4C-4B9C-BF8E-1676809D1916}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Test", "tests\Validators.Tests\Validators.Test.csproj", "{C1BF5697-AC4C-4B9C-BF8E-1676809D1916}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCases.Test", "tests\UseCases.Test\UseCases.Test.csproj", "{B422C097-D07D-4228-971C-4E660639B8FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Test", "tests\WebApi.Test\WebApi.Test.csproj", "{811FA24B-1F38-4D2D-B14F-9C5DEFBB0022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions.Test", "tests\Extensions.Test\Extensions.Test.csproj", "{E5508664-D37E-4DE9-816E-C66D4B079D99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{811FA24B-1F38-4D2D-B14F-9C5DEFBB0022}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{811FA24B-1F38-4D2D-B14F-9C5DEFBB0022}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{811FA24B-1F38-4D2D-B14F-9C5DEFBB0022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5508664-D37E-4DE9-816E-C66D4B079D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5508664-D37E-4DE9-816E-C66D4B079D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5508664-D37E-4DE9-816E-C66D4B079D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5508664-D37E-4DE9-816E-C66D4B079D99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{C1BF5697-AC4C-4B9C-BF8E-1676809D1916} = {67247A94-C5E5-412C-977A-AD4D0CD26D08}
 		{B422C097-D07D-4228-971C-4E660639B8FE} = {67247A94-C5E5-412C-977A-AD4D0CD26D08}
 		{811FA24B-1F38-4D2D-B14F-9C5DEFBB0022} = {67247A94-C5E5-412C-977A-AD4D0CD26D08}
+		{E5508664-D37E-4DE9-816E-C66D4B079D99} = {67247A94-C5E5-412C-977A-AD4D0CD26D08}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5035F285-2FAD-4B6F-97A6-79508135769F}

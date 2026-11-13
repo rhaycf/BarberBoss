@@ -9,6 +9,7 @@ using BarberBoss.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +40,7 @@ builder.Services.AddSwaggerGen(config =>
     });
 });
 
-builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFIlter)));
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -101,4 +102,5 @@ async Task MigrateDatabase()
     await DataBaseMigration.MigrateDatabase(scope.ServiceProvider);
 }
 
+[ExcludeFromCodeCoverage]
 public partial class Program { }

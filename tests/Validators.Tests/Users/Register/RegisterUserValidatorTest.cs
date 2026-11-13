@@ -4,7 +4,7 @@ using CommonTestUtilities.Requests;
 using FluentValidation;
 using Shouldly;
 
-namespace Validators.Tests.Users.Register;
+namespace Validators.Test.Users.Register;
 
 public class RegisterUserValidatorTest
 {

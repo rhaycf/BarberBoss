@@ -4,7 +4,7 @@ using BarberBoss.Exception;
 using CommonTestUtilities.Requests;
 using Shouldly;
 
-namespace Validators.Tests.Billings;
+namespace Validators.Test.Billings;
 
 public class RegisterBillingValidatorTests
 {

@@ -3,7 +3,7 @@ using BarberBoss.Exception;
 using CommonTestUtilities.Requests;
 using Shouldly;
 
-namespace Validators.Tests.Users.ChangePassword;
+namespace Validators.Test.Users.ChangePassword;
 
 public class ChangePasswordValidatorTest
 {

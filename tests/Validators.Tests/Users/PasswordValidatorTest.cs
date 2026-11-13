@@ -3,7 +3,7 @@ using BarberBoss.Communication.Requests;
 using FluentValidation;
 using Shouldly;
 
-namespace Validators.Tests.Users;
+namespace Validators.Test.Users;
 
 public class PasswordValidatorTest
 {

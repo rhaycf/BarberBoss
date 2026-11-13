@@ -18,6 +18,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     public BillingIdentityManager Billing_Admin { get; private set; } = default!;
     public UserIdentityManager User_Barber { get; private set; } = default!;
     public UserIdentityManager User_Admin { get; private set; } = default!;
+    public UserIdentityManager User_WithoutBillings { get; private set; } = default!;
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -50,6 +51,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         var userAdmin = AddUserAdmin(dbContext, passwordEncripter, accessTokenGenerator);
         var billingAdmin = AddBillings(dbContext, userAdmin, billingId: 2);
         Billing_Admin = new BillingIdentityManager(billingAdmin);
+
+        AddUserWithoutBillings(dbContext, passwordEncripter, accessTokenGenerator);
 
         dbContext.SaveChanges();
     }
@@ -86,6 +89,21 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         User_Admin = new UserIdentityManager(user, password, token);
 
         return user;
+    }
+
+    private void AddUserWithoutBillings(BarberBossDbContext dbContext, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
+    {
+        var user = UserBuilder.Build();
+        user.Id = 3;
+
+        var password = user.Password;
+        user.Password = passwordEncripter.Encrypt(user.Password);
+
+        dbContext.Users.Add(user);
+
+        var token = accessTokenGenerator.Generate(user);
+
+        User_WithoutBillings = new UserIdentityManager(user, password, token);
     }
 
     private Billing AddBillings(BarberBossDbContext dbContext, User user, long billingId)

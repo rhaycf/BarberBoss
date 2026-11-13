@@ -12,6 +12,7 @@ using BarberBoss.Infrastructure.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BarberBoss.Infrastructure;
 
@@ -50,6 +51,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
     }
 
+    [ExcludeFromCodeCoverage]
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Connection");
